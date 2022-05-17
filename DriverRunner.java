@@ -15,7 +15,7 @@ import javax.swing.Timer;
 
 public class DriverRunner extends JPanel implements Runnable{
 
-	static final int GAME_WIDTH = 600;
+	static final int GAME_WIDTH = 800;
 	static final int GAME_HEIGHT = 600;
 	static final Dimension SCREEN_SIZE = new Dimension(GAME_WIDTH,GAME_HEIGHT);
 	
@@ -28,7 +28,7 @@ public class DriverRunner extends JPanel implements Runnable{
 	Random random;
 	int x = 0;
 	int y = 0;
-	int playerX = 300;
+	int playerX = 400;
 	int playerY = 300;
 	int imag2x;
 	int imag2y;
@@ -61,24 +61,17 @@ public class DriverRunner extends JPanel implements Runnable{
 	public void draw(Graphics g) {
 		
 		
-		
+		Toolkit.getDefaultToolkit().sync(); 
 		g.translate(player.translationX, player.translationY);
 		//shoudl start 1 TILE BACK!!!
-		g.clearRect(-1000, -1000, 10000, 10000);
-		for (int i = 10; i < 400 / 20; i++) {
-			g.setColor(Color.PINK);
-			for (int e = 0; e < 800 / 20; e++) {
-				g.drawRect(e*20, i*20, 20, 20);
-				g.fillRect(e*20, i*20, 20, 20);
-			}
-		}
+		map.draw(g, this);
 		
 	
 		g.setColor(Color.BLACK);
 		g.fillRect(400, 400, 20, 20);
 		player.draw(g);
 		
-		Toolkit.getDefaultToolkit().sync(); 
+		
 
 
 	}
@@ -97,7 +90,7 @@ public class DriverRunner extends JPanel implements Runnable{
 				
 				if (player.movingX == 1) {
 					if (player.playerX + 23 >= 400 && player.playerX + 22 <= 420 && (player.playerY <= 420 && player.playerY >= 380)){
-						System.out.println("collision");
+						
 					} else {
 						player.moveX(-4, 2 * map.imag2x);
 
@@ -105,7 +98,7 @@ public class DriverRunner extends JPanel implements Runnable{
 				}
 				if (player.movingX == -1) {
 					if (player.playerX - 20 == 400 && (player.playerY <= 420 && player.playerY >= 380)){
-						System.out.println("collision");
+						
 					} else {
 						player.moveX(4, 2* map.imag2x);
 
@@ -114,7 +107,7 @@ public class DriverRunner extends JPanel implements Runnable{
 				
 				if (player.movingY == 1) {
 					if (player.playerY - 20 == 400 && (player.playerX <= 420 && player.playerX >= 380)){
-						System.out.println("collision");
+						
 					} else {
 						player.moveY(4, map.imag2y);
 
@@ -123,7 +116,6 @@ public class DriverRunner extends JPanel implements Runnable{
 				
 				if (player.movingY == -1) {
 					if (player.playerY + 20 == 400 && (player.playerX <= 420 && player.playerX >= 380)){
-						System.out.println("collision");
 					} else {
 						player.moveY(-4, map.imag2y);
 
