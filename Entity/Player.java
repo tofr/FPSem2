@@ -1,24 +1,31 @@
+package Entity;
 
 import java.awt.*;
 import java.awt.event.*;
 
 public class Player {
-    int playerX;
-    int playerY;
-    int playerHeight;
-    int playerWidth;
+    public int playerX;
+    public int playerY;
+    public int playerHeight;
+    public int playerWidth;
 
     //1 right/up, 0 not moving, -1 left/down
-    int movingX = 0;
-    int movingY = 0;
-    int translationX = 0;
-    int translationY = 0;
-    boolean translateX = false;
-    boolean translateY = false;
+    public int movingX = 0;
+    public int movingY = 0;
+    public int translationX = 0;
+    public int translationY = 0;
+    public boolean translateX = false;
+    public boolean translateY = false;
+
+    public boolean falling = true;
+
+    public int yVelo = 4;
 
     public Player() {
         this.playerX = 400;
         this.playerY = 300;
+        this.playerHeight = 60;
+        this.playerWidth = 30;
     }
 
     public void moveX(int dir, int x) {
@@ -47,12 +54,18 @@ public class Player {
 			playerY = -translationY + 300;
 		}
 	}
+    
+    
 
     public void draw(Graphics g) {
-       
+        if (falling) playerY += yVelo;
         Graphics o = g.create();
         o.setColor(Color.LIGHT_GRAY);
 	    o.fillRect(playerX, playerY, 30, 60);
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(playerX, playerY, playerWidth, playerHeight);
     }
 
     public void keyPressed(KeyEvent e) {

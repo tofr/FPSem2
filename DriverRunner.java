@@ -12,6 +12,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.Timer;
 
+import Blocks.Block;
+import Blocks.Grass;
+import Entity.Player;
+
 
 public class DriverRunner extends JPanel implements Runnable{
 
@@ -37,6 +41,9 @@ public class DriverRunner extends JPanel implements Runnable{
 	boolean translateX = true;
 	boolean translateY = true;
 	
+	// DELETE THIS ONLY HERE FOR TESTING
+	ArrayList<Block> smallMap = new ArrayList<>();
+	boolean falling = true;
 	
 	public DriverRunner() {
 		this.setFocusable(true);
@@ -47,6 +54,11 @@ public class DriverRunner extends JPanel implements Runnable{
         imag2y = map.imag2y;
 		gameThread = new Thread(this);
 		gameThread.start();
+
+		//DELETE THIS
+		smallMap.add(new Grass(400, 400));
+		smallMap.add(new Grass(420, 400));
+		smallMap.add(new Grass(440, 400));
     }
 	
     
@@ -65,10 +77,10 @@ public class DriverRunner extends JPanel implements Runnable{
 		g.translate(player.translationX, player.translationY);
 		//shoudl start 1 TILE BACK!!!
 		map.draw(g, this);
+		for (int i = 0; i < smallMap.size(); i++) {
+			smallMap.get(i).draw(g);
+		}
 		
-	
-		g.setColor(Color.BLACK);
-		g.fillRect(400, 400, 20, 20);
 		player.draw(g);
 		
 		
@@ -88,12 +100,14 @@ public class DriverRunner extends JPanel implements Runnable{
 			lastTime = now;
 			if(delta >=1) {
 				
-				if (player.movingX == 1) {
-					if (player.playerX + 23 >= 400 && player.playerX + 22 <= 420 && (player.playerY <= 420 && player.playerY >= 380)){
+				if (player.movingX == 1) { //moving right
+					player.moveX(-4, 2 * map.imag2x);
+
+					if (player.getBounds().intersects(smallMap.get(0).getBounds())){
+						playerX = smallMap.get(0).getX();
 						
 					} else {
-						player.moveX(-4, 2 * map.imag2x);
-
+						
 					}
 				}
 				if (player.movingX == -1) {
@@ -106,23 +120,37 @@ public class DriverRunner extends JPanel implements Runnable{
 				}
 				
 				if (player.movingY == 1) {
+					System.out.println("ding");
 					if (player.playerY - 20 == 400 && (player.playerX <= 420 && player.playerX >= 380)){
 						
 					} else {
 						player.moveY(4, map.imag2y);
+						player.falling = true;
+						player.yVelo = 4;
 
 					}
 				}
 				
-				if (player.movingY == -1) {
-					if (player.playerY + 20 == 400 && (player.playerX <= 420 && player.playerX >= 380)){
-					} else {
-						player.moveY(-4, map.imag2y);
+				if (true) {
+					if (player.getBounds().intersects(smallMap.get(0).getBounds()) || player.getBounds().intersects(smallMap.get(1).getBounds())){
+						// playerX = smallMap.get(0).getX();
+						player.yVelo = 0;
+						player.falling = false;
+						
+						System.out.println(playerY);
+						System.out.println("doing this");
+						playerY -= 4;
 
+						
+					} else {
+						
+					
 					}
 				}				
 				repaint();
 				delta--;
+				
+				
 			}
 			
 		}
