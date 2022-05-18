@@ -132,7 +132,7 @@ public class DriverRunner extends JPanel implements Runnable{
 				}
 				
 				if (true) {
-					if (player.getBounds().intersects(smallMap.get(0).getBounds()) || player.getBounds().intersects(smallMap.get(1).getBounds())){
+					if (player.getBottomBounds().intersects(smallMap.get(0).getBounds()) || player.getBounds().intersects(smallMap.get(1).getBounds())){
 						// playerX = smallMap.get(0).getX();
 						player.yVelo = 0;
 						player.falling = false;

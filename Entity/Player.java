@@ -68,6 +68,10 @@ public class Player {
         return new Rectangle(playerX, playerY, playerWidth, playerHeight);
     }
 
+    public Rectangle getBottomBounds() {
+        return new Rectangle(playerX, playerY + playerHeight, playerWidth, 4); //4 is arbitrary
+    }
+
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode()==KeyEvent.VK_W) {
             movingY = 1;

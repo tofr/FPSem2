@@ -7,7 +7,7 @@ public class Driver extends JFrame{
 	Driver(){
 		panel = new DriverRunner();
 		this.add(panel);
-		this.setTitle("Apple Test");
+		this.setTitle("The Quest For The Purple Pineapple");
 		this.setResizable(true);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
