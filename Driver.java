@@ -13,6 +13,7 @@ public class Driver extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
+		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 	}
     public static void main(String[] args) {
