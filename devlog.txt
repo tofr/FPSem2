@@ -1,0 +1,7 @@
+3/17 - Jason: Basic GUI interface, graphics, designing
+     - group: finalized idea + groupmates
+
+3/18 - Jason: Blocks, started designing block display algo\
+              Bound detection and gravity - ish; still bugs so must fix
+
+            
