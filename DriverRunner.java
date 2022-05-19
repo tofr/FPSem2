@@ -57,8 +57,8 @@ public class DriverRunner extends JPanel implements Runnable{
 
 		//DELETE THIS
 		smallMap.add(new Grass(400, 400));
-		smallMap.add(new Grass(420, 400));
-		smallMap.add(new Grass(440, 400));
+		smallMap.add(new Grass(420, 380));
+		smallMap.add(new Grass(440, 360));
     }
 	
     
@@ -95,60 +95,41 @@ public class DriverRunner extends JPanel implements Runnable{
 		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		while(true) {
+			repaint();
+			
 			long now = System.nanoTime();
 			delta += (now -lastTime)/ns;
 			lastTime = now;
+
 			if(delta >=1) {
 				
+				player.falling = true;
+				
 				if (player.movingX == 1) { //moving right
-					player.moveX(-4, 2 * map.imag2x);
-
-					if (player.getBounds().intersects(smallMap.get(0).getBounds())){
-						playerX = smallMap.get(0).getX();
-						
-					} else {
-						
-					}
+					player.right();
 				}
 				if (player.movingX == -1) {
-					if (player.playerX - 20 == 400 && (player.playerY <= 420 && player.playerY >= 380)){
-						
-					} else {
-						player.moveX(4, 2* map.imag2x);
-
-					}
+					player.left();
 				}
 				
 				if (player.movingY == 1) {
-					System.out.println("ding");
-					if (player.playerY - 20 == 400 && (player.playerX <= 420 && player.playerX >= 380)){
-						
-					} else {
-						player.moveY(4, map.imag2y);
-						player.falling = true;
-						player.yVelo = 4;
-
-					}
+					player.falling = false;
+					player.up();
 				}
 				
-				if (true) {
-					if (player.getBottomBounds().intersects(smallMap.get(0).getBounds()) || player.getBounds().intersects(smallMap.get(1).getBounds())){
-						// playerX = smallMap.get(0).getX();
-						player.yVelo = 0;
-						player.falling = false;
-						
-						System.out.println(playerY);
-						System.out.println("doing this");
-						playerY -= 4;
-
-						
-					} else {
-						
+				if (player.movingY == -1) {
+					player.down();
 					
-					}
-				}				
-				repaint();
+				}	
+				player.tick(smallMap);
+				player.jumping = false;
+
+				System.out.println(player.yVelo);
+				
+
 				delta--;
+
+				
 				
 				
 			}

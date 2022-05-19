@@ -2,6 +2,9 @@ package Entity;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
+import Blocks.Block;
 
 public class Player {
     public int playerX;
@@ -18,8 +21,10 @@ public class Player {
     public boolean translateY = false;
 
     public boolean falling = true;
+    public boolean jumping = false;
 
     public int yVelo = 4;
+    public int xVelo = 0;
 
     public Player() {
         this.playerX = 400;
@@ -55,17 +60,67 @@ public class Player {
 		}
 	}
     
+    public void tick(ArrayList<Block> blocks) {
+        if (!collision(blocks)) {
+            moveX(xVelo, 2000);
+            moveY(yVelo, 2000);
+        }
+        xVelo = 0;
+        if (jumping) {
+            moveY(20, 2000);
+        }
+        
+    }
     
+    public boolean collision(ArrayList<Block> blocks) {
+        for (int i = 0; i < blocks.size(); i++) {
+            if (getBottomBounds().intersects(blocks.get(i).getBounds())) {
+                yVelo = 0;
+                return true;
+            }
+            if (getRightBounds().intersects(blocks.get(i).getBounds())) {
+                xVelo = 0;
+                System.out.println("intersect!");
+                return true;
+            }
+            if (falling) yVelo = -4;
+           
+
+        }
+        return false;
+        
+    }
 
     public void draw(Graphics g) {
-        if (falling) playerY += yVelo;
         Graphics o = g.create();
         o.setColor(Color.LIGHT_GRAY);
 	    o.fillRect(playerX, playerY, 30, 60);
+        o.setColor(Color.RED);
+        o.fillRect(playerX + playerWidth - 4, playerY, 4, playerHeight);
+    }
+
+    public void right() {
+        xVelo = -4;
+    }
+
+    public void left() {
+        xVelo = 4;
+    }
+
+    public void up() {
+        jumping = true;
+    }
+
+    public void down() {
+        yVelo = -4;
     }
 
     public Rectangle getBounds() {
         return new Rectangle(playerX, playerY, playerWidth, playerHeight);
+    }
+
+    public Rectangle getRightBounds() {
+        return new Rectangle(playerX + playerWidth - 4, playerY, 4, playerHeight);
     }
 
     public Rectangle getBottomBounds() {
