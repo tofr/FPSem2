@@ -33,32 +33,6 @@ public class Player {
         this.playerWidth = 30;
     }
 
-    public void moveX(int dir, int x) {
-		playerX -= dir;
-
-		if (playerX <= 400 || playerX >= x - 400) {
-			translateX = false;
-		} else {
-			translateX = true;
-		}
-		if (translateX) {
-			translationX += dir;
-			playerX = -translationX + 400;
-		}
-	}
-	public void moveY(int dir, int y) {
-		playerY -= dir;
-
-		if (playerY <= 300 || playerY >= y - 300) {
-			translateY = false;
-		} else {
-			translateY = true;
-		}
-		if (translateY) {
-			translationY += dir;
-			playerY = -translationY + 300;
-		}
-	}
     
     public void tick(ArrayList<Block> blocks) {
         if (!collision(blocks)) {
