@@ -12,7 +12,7 @@ public class Camera {
     public void tick(Player player) { // have the camera follow the player!
         
         x = -player.getX() + DriverRunner.GAME_WIDTH/2;
-        
+        y = -player.getY() + DriverRunner.GAME_HEIGHT/2;
     }
 
     public void setX(double x) {

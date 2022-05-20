@@ -89,7 +89,7 @@ public class DriverRunner extends JPanel implements Runnable{
 	public void draw(Graphics g) {
 		cam.tick(player);
 		Toolkit.getDefaultToolkit().sync(); 
-		if (cam.getX() < 0) g.translate((int) cam.getX(), 0);
+		if (cam.getX() < 0) g.translate((int) cam.getX(), (int) cam.getY());
 		
 		//shoudl start 1 TILE BACK!!!
 		map.draw(g, this);
@@ -98,7 +98,7 @@ public class DriverRunner extends JPanel implements Runnable{
 		}
 		
 		player.draw(g);
-		if (cam.getX() < 0) g.translate((int) -cam.getX(), 0);
+		if (cam.getX() < 0) g.translate((int) -cam.getX(), (int) -cam.getY());
 		
 
 
