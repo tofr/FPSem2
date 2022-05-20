@@ -27,6 +27,7 @@ public class DriverRunner extends JPanel implements Runnable{
 
 	
 	Thread gameThread;
+	TileMap currLev;
 	Image image;
 	Graphics graphics;
 	Player player = new Player();
@@ -77,6 +78,11 @@ public class DriverRunner extends JPanel implements Runnable{
 		cam.setY(playerY);
 	}
 	
+	public void loadLev() {
+		currLev.loadFile("test.txt");
+		currLev.load();
+
+	}
     
 	
 	public void paint(Graphics g) {
@@ -95,10 +101,7 @@ public class DriverRunner extends JPanel implements Runnable{
 		
 		//shoudl start 1 TILE BACK!!!
 		
-		for (int i = 0; i < smallMap.size(); i++) {
-			smallMap.get(i).draw(g);
-		}
-		
+		currLev.draw(g);
 		player.draw(g);
 		if (cam.getX() < 0) g.translate((int) -cam.getX(), 0);
 		if (cam.getY() < 0) g.translate(0, (int) -cam.getY());

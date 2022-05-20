@@ -3,10 +3,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Blocks.Block;
+import Blocks.Grass;
+import Settings.MapSettings;
+
 import java.awt.*;
 
 
 public class TileMap {
+    public String[][] rawMap;
     public Block[][] map;
     // public ArrayList<MapEntity> entities;
     // public Location start;
@@ -14,33 +18,44 @@ public class TileMap {
 
     public TileMap() {
         this.map = new Block[0][0];
+        this.rawMap = new String[0][0];
         // this.entities = new ArrayList<>();
         // this.start = null;
         // this.end = null;
     }
 
-
-    public boolean load(String filename) {
+    
+    public void loadFile(String filename) {
         try {
             Scanner sc = new Scanner(new File(filename));
-            ArrayList<Block[]> blockMap = new ArrayList<>();
+            ArrayList<String[]> blockMap = new ArrayList<>();
             while (sc.hasNextLine()) {
-                ArrayList<Block> tiles = new ArrayList<>();
+                ArrayList<String> tiles = new ArrayList<>();
                 for (char tileKey : sc.nextLine().toCharArray()) {
-                    switch(tileKey) {
-                        case 'G':
-                            tiles.add()
-                    }
+                    tiles.add(Character.toString(tileKey));
                 }
-                blockMap.add(tiles.toArray(new Tile[0]));
+                blockMap.add(tiles.toArray(new String[0]));
             }
-            this.map = blockMap.toArray(new Block[0][0]);
-            return true;
+            this.rawMap = blockMap.toArray(new String[0][0]);
         } catch (Exception e) {
             System.out.println(e);
-            
-            return false;
         }
+    }
+
+    public boolean load() {
+        for (int row = 0; row < this.rawMap.length; row++) {
+            for (int col = 0; col < this.rawMap[row].length; col++) {
+                switch (rawMap[row][col]) {
+                    case "G":
+                        map[row][col] = new Grass(row * MapSettings.tileSize, col * MapSettings.tileSize);
+                        break;
+                        
+                        
+                }
+            }
+            
+        }
+        return true;
     }
 
     // public void load(ArrayList<MapEntity> entities) {
@@ -79,6 +94,9 @@ public class TileMap {
     public void draw(Graphics g) {
         for (int row = 0; row < this.map.length; row++) {
             for (int col = 0; col < this.map[row].length; col++) {
+                if (map[row][col] == null) {
+                    continue;
+                }
                 map[row][col].draw(g);
             }
             
