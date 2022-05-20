@@ -1,7 +1,9 @@
-3/17 - Jason: Basic GUI interface, graphics, designing
+5/17 - Jason: Basic GUI interface, graphics, designing
      - group: finalized idea + groupmates
 
-3/18 - Jason: Blocks, started designing block display algo\
+5/18 - Jason: Blocks, started designing block display algo
               Bound detection and gravity - ish; still bugs so must fix
 
-            
+5/19 - Jason: Smoothed bound detection and collisions, smoothed top scrolling, side scrolling 
+              Started implementing block render
+       Russell: Started Research on jumping and the physics behind it
