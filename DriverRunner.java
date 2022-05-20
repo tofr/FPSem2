@@ -80,7 +80,7 @@ public class DriverRunner extends JPanel implements Runnable{
     
 	
 	public void paint(Graphics g) {
-
+		
 		Toolkit.getDefaultToolkit().sync(); 
 		draw(g);
 		
@@ -89,11 +89,12 @@ public class DriverRunner extends JPanel implements Runnable{
 	public void draw(Graphics g) {
 		cam.tick(player);
 		Toolkit.getDefaultToolkit().sync(); 
+		map.draw(g, this);		
 		if (cam.getX() < 0) g.translate((int) cam.getX(), 0);
 		if (cam.getY() < 0) g.translate(0, (int) cam.getY());
 		
 		//shoudl start 1 TILE BACK!!!
-		map.draw(g, this);
+		
 		for (int i = 0; i < smallMap.size(); i++) {
 			smallMap.get(i).draw(g);
 		}
@@ -109,7 +110,7 @@ public class DriverRunner extends JPanel implements Runnable{
 	public void run() {
 		//game loop
 		long lastTime = System.nanoTime();
-		double amountOfTicks =60.0;
+		double amountOfTicks = 60.0; // fps
 		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		while(true) {
