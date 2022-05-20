@@ -16,10 +16,6 @@ public class Player {
     //1 right/up, 0 not moving, -1 left/down
     public int movingX = 0;
     public int movingY = 0;
-    public int translationX = 0;
-    public int translationY = 0;
-    public boolean translateX = false;
-    public boolean translateY = false;
 
     public boolean falling = true;
     public boolean jumping = false;
@@ -29,7 +25,7 @@ public class Player {
 
     public Player() {
         this.playerX = 400;
-        this.playerY = 300;
+        this.playerY = 00;
         this.playerHeight = 60;
         this.playerWidth = 30;
     }
@@ -48,11 +44,10 @@ public class Player {
     
     public void collision(ArrayList<Block> blocks) {
         for (int i = 0; i < blocks.size(); i++) {
-            System.out.println(blocks.get(i).getX());
-            System.out.println(playerX);
+
             if (getBottomBounds().intersects(blocks.get(i).getBounds())) {
                 yVelo = 0;
-                System.out.println("col");
+               
                
             }
             if (getRightBounds().intersects(blocks.get(i).getBounds())) {
@@ -114,6 +109,14 @@ public class Player {
 
     public Rectangle getBottomBounds() {
         return new Rectangle((int) playerX + 1, (int) playerY + playerHeight - 4, playerWidth - 1, 5); //4 is arbitrary
+    }
+
+    public double getX() {
+        return playerX;
+    }
+
+    public double getY() {
+        return playerY;
     }
 
     public void keyPressed(KeyEvent e) {

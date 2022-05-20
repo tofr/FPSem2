@@ -19,20 +19,23 @@ import Entity.Player;
 
 public class DriverRunner extends JPanel implements Runnable{
 
-	static final int GAME_WIDTH = 800;
-	static final int GAME_HEIGHT = 600;
+	public static final int GAME_WIDTH = 800;
+	public static final int GAME_HEIGHT = 600;
 	static final Dimension SCREEN_SIZE = new Dimension(GAME_WIDTH,GAME_HEIGHT);
 	
     MapDrawer map = new MapDrawer();
+
+	
 	Thread gameThread;
 	Image image;
 	Graphics graphics;
 	Player player = new Player();
+	Camera cam = new Camera(player.getX(), player.getY());
     BufferedImage imag2;
 	Random random;
 	int x = 0;
 	int y = 0;
-	int playerX = 400;
+	int playerX = 800;
 	int playerY = 300;
 	int imag2x;
 	int imag2y;
@@ -64,9 +67,15 @@ public class DriverRunner extends JPanel implements Runnable{
 		smallMap.add(new Grass(500, 360));
 		smallMap.add(new Grass(600, 360));
 		smallMap.add(new Grass(440, 360));
+		snapCamera();
 
 		
     }
+
+	public void snapCamera() {
+		cam.setX(playerX);
+		cam.setY(playerY);
+	}
 	
     
 	
@@ -78,10 +87,10 @@ public class DriverRunner extends JPanel implements Runnable{
 	}
 	
 	public void draw(Graphics g) {
-		
-		
+		cam.tick(player);
 		Toolkit.getDefaultToolkit().sync(); 
-		g.translate(player.translationX, player.translationY);
+		if (cam.getX() < 0) g.translate((int) cam.getX(), 0);
+		
 		//shoudl start 1 TILE BACK!!!
 		map.draw(g, this);
 		for (int i = 0; i < smallMap.size(); i++) {
@@ -89,7 +98,7 @@ public class DriverRunner extends JPanel implements Runnable{
 		}
 		
 		player.draw(g);
-		
+		if (cam.getX() < 0) g.translate((int) -cam.getX(), 0);
 		
 
 
