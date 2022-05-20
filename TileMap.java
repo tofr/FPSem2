@@ -3,40 +3,38 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Blocks.Block;
+import java.awt.*;
 
 
 public class TileMap {
-    public Tile[][] map;
+    public Block[][] map;
     // public ArrayList<MapEntity> entities;
     // public Location start;
     // public Location end;
 
     public TileMap() {
-        this.map = new Tile[0][0];
+        this.map = new Block[0][0];
         // this.entities = new ArrayList<>();
         // this.start = null;
         // this.end = null;
     }
 
-    // public TileMap(Location start, Location end) {
-    //     this.map = new Tile[0][0];
-    //     this.entities = new ArrayList<>();
-    //     this.start = start;
-    //     this.end = end;
-    // }
 
     public boolean load(String filename) {
         try {
             Scanner sc = new Scanner(new File(filename));
-            ArrayList<Tile[]> tileMap = new ArrayList<>();
+            ArrayList<Block[]> blockMap = new ArrayList<>();
             while (sc.hasNextLine()) {
                 ArrayList<Block> tiles = new ArrayList<>();
                 for (char tileKey : sc.nextLine().toCharArray()) {
-                    tiles.add(new Gra);
+                    switch(tileKey) {
+                        case 'G':
+                            tiles.add()
+                    }
                 }
-                tileMap.add(tiles.toArray(new Tile[0]));
+                blockMap.add(tiles.toArray(new Tile[0]));
             }
-            this.map = tileMap.toArray(new Tile[0][0]);
+            this.map = blockMap.toArray(new Block[0][0]);
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -74,39 +72,16 @@ public class TileMap {
     //     return null;
     // }
 
-    public Tile getTile(int row, int col) {
+    public Block getBlock(int row, int col) {
         return this.map[row][col];
     }
 
-    public static void clearScreen() {
-        System.out.println("\u001b[H\u001b[2J");
-    }
-
-    public void render() {
-        clearScreen();
+    public void draw(Graphics g) {
         for (int row = 0; row < this.map.length; row++) {
             for (int col = 0; col < this.map[row].length; col++) {
-                // if (entityOn(row, col) != null) {
-                //     System.out.print(entityOn(row, col).render());
-                // } else {
-                //     System.out.print(this.map[row][col].toString());
-                // }
+                map[row][col].draw(g);
             }
-            System.out.println();
-        }
-    }
-    //being lazy
-    public void render(boolean bool) {
-       
-        for (int row = 0; row < this.map.length; row++) {
-            for (int col = 0; col < this.map[row].length; col++) {
-                if (entityOn(row, col) != null) {
-                    System.out.print(entityOn(row, col).render());
-                } else {
-                    System.out.print(this.map[row][col].toString());
-                }
-            }
-            System.out.println();
+            
         }
     }
 }
