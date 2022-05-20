@@ -36,11 +36,13 @@ public class Player {
 
     
     public void tick(ArrayList<Block> blocks) {
-        playerX += xVelo;
-        playerY += yVelo;
+        
         if (falling) {
             yVelo = 2;
         }
+        collision(blocks);
+        playerX += xVelo;
+        playerY += yVelo;
         collision(blocks);
     }
     
@@ -50,14 +52,18 @@ public class Player {
             System.out.println(playerX);
             if (getBottomBounds().intersects(blocks.get(i).getBounds())) {
                 yVelo = 0;
+                System.out.println("col");
                
             }
             if (getRightBounds().intersects(blocks.get(i).getBounds())) {
                 playerX = blocks.get(i).getX() - playerWidth;               
             }
-            if (getRightBounds().intersects(blocks.get(i).getBounds())) {
-                playerX = blocks.get(i).getX() - playerWidth;               
+
+            if (getLeftBounds().intersects(blocks.get(i).getBounds())) {
+                playerX = blocks.get(i).getX() + 20;               
             }
+            
+
 
             
            
@@ -71,8 +77,8 @@ public class Player {
         Graphics o = g.create();
         o.setColor(Color.LIGHT_GRAY);
 	    o.fillRect((int) playerX, (int) playerY, 30, 60);
-        // o.setColor(Color.RED);
-        // o.fillRect((int) playerX + (int) playerWidth, (int) playerY, 4, playerHeight);
+        o.setColor(Color.RED);
+        o.fillRect((int) playerX + 1, (int) playerY + playerHeight - 4, playerWidth - 1, 5);
         // o.setColor(Color.BLACK);
         // o.fillRect((int) playerX, (int) playerY + playerHeight, playerWidth, 4);
     }
@@ -102,8 +108,12 @@ public class Player {
         return new Rectangle((int) playerX + playerWidth - 4, (int) playerY, 4, playerHeight - 4);
     }
 
+    public Rectangle getLeftBounds() {
+        return new Rectangle((int) playerX + 1, (int) playerY, 4, playerHeight - 4);
+    }
+
     public Rectangle getBottomBounds() {
-        return new Rectangle((int) playerX, (int) playerY + playerHeight - 4, playerWidth, 6); //4 is arbitrary
+        return new Rectangle((int) playerX + 1, (int) playerY + playerHeight - 4, playerWidth - 1, 5); //4 is arbitrary
     }
 
     public void keyPressed(KeyEvent e) {

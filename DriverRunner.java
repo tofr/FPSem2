@@ -59,6 +59,13 @@ public class DriverRunner extends JPanel implements Runnable{
 		smallMap.add(new Grass(400, 400));
 		smallMap.add(new Grass(420, 380));
 		smallMap.add(new Grass(440, 360));
+		smallMap.add(new Grass(460, 360));
+		smallMap.add(new Grass(480, 360));
+		smallMap.add(new Grass(500, 360));
+		smallMap.add(new Grass(600, 360));
+		smallMap.add(new Grass(440, 360));
+
+		
     }
 	
     
