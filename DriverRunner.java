@@ -105,26 +105,26 @@ public class DriverRunner extends JPanel implements Runnable{
 				
 				player.falling = true;
 				
-				if (player.movingX == 1) { //moving right
-					player.right();
-				}
-				if (player.movingX == -1) {
-					player.left();
-				}
+				// if (player.movingX == 1) { //moving right
+				// 	player.right();
+				// }
+				// if (player.movingX == -1) {
+				// 	player.left();
+				// }
 				
-				if (player.movingY == 1) {
-					player.falling = false;
-					player.up();
-				}
+				// if (player.movingY == 1) {
+				// 	player.falling = false;
+				// 	player.up();
+				// }
 				
-				if (player.movingY == -1) {
-					player.down();
+				// if (player.movingY == -1) {
+				// 	player.down();
 					
-				}	
+				// }	
 				player.tick(smallMap);
 				player.jumping = false;
 
-				System.out.println(player.yVelo);
+				
 				
 
 				delta--;

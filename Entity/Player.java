@@ -2,13 +2,14 @@ package Entity;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.text.CollationElementIterator;
 import java.util.ArrayList;
 
 import Blocks.Block;
 
 public class Player {
-    public int playerX;
-    public int playerY;
+    public float playerX;
+    public float playerY;
     public int playerHeight;
     public int playerWidth;
 
@@ -23,8 +24,8 @@ public class Player {
     public boolean falling = true;
     public boolean jumping = false;
 
-    public int yVelo = 4;
-    public int xVelo = 0;
+    public double yVelo = 4;
+    public double xVelo = 0;
 
     public Player() {
         this.playerX = 400;
@@ -35,54 +36,58 @@ public class Player {
 
     
     public void tick(ArrayList<Block> blocks) {
-        if (!collision(blocks)) {
-            moveX(xVelo, 2000);
-            moveY(yVelo, 2000);
+        playerX += xVelo;
+        playerY += yVelo;
+        if (falling) {
+            yVelo = 2;
         }
-        xVelo = 0;
-        if (jumping) {
-            moveY(20, 2000);
-        }
-        
+        collision(blocks);
     }
     
-    public boolean collision(ArrayList<Block> blocks) {
+    public void collision(ArrayList<Block> blocks) {
         for (int i = 0; i < blocks.size(); i++) {
+            System.out.println(blocks.get(i).getX());
+            System.out.println(playerX);
             if (getBottomBounds().intersects(blocks.get(i).getBounds())) {
                 yVelo = 0;
-                return true;
+               
             }
             if (getRightBounds().intersects(blocks.get(i).getBounds())) {
-                xVelo = 0;
-                System.out.println("intersect!");
-                return true;
+                playerX = blocks.get(i).getX() - playerWidth;               
             }
-            if (falling) yVelo = -4;
+            if (getRightBounds().intersects(blocks.get(i).getBounds())) {
+                playerX = blocks.get(i).getX() - playerWidth;               
+            }
+
+            
            
 
         }
-        return false;
+       
         
     }
 
     public void draw(Graphics g) {
         Graphics o = g.create();
         o.setColor(Color.LIGHT_GRAY);
-	    o.fillRect(playerX, playerY, 30, 60);
-        o.setColor(Color.RED);
-        o.fillRect(playerX + playerWidth - 4, playerY, 4, playerHeight);
+	    o.fillRect((int) playerX, (int) playerY, 30, 60);
+        // o.setColor(Color.RED);
+        // o.fillRect((int) playerX + (int) playerWidth, (int) playerY, 4, playerHeight);
+        // o.setColor(Color.BLACK);
+        // o.fillRect((int) playerX, (int) playerY + playerHeight, playerWidth, 4);
     }
 
     public void right() {
-        xVelo = -4;
+        xVelo = 4;
     }
 
     public void left() {
-        xVelo = 4;
+        xVelo = -4;
     }
 
     public void up() {
         jumping = true;
+        playerY -= 100;
     }
 
     public void down() {
@@ -90,43 +95,45 @@ public class Player {
     }
 
     public Rectangle getBounds() {
-        return new Rectangle(playerX, playerY, playerWidth, playerHeight);
+        return new Rectangle((int) playerX, (int) playerY, playerWidth, playerHeight);
     }
 
     public Rectangle getRightBounds() {
-        return new Rectangle(playerX + playerWidth - 4, playerY, 4, playerHeight);
+        return new Rectangle((int) playerX + playerWidth - 4, (int) playerY, 4, playerHeight - 4);
     }
 
     public Rectangle getBottomBounds() {
-        return new Rectangle(playerX, playerY + playerHeight, playerWidth, 4); //4 is arbitrary
+        return new Rectangle((int) playerX, (int) playerY + playerHeight - 4, playerWidth, 6); //4 is arbitrary
     }
 
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode()==KeyEvent.VK_W) {
-            movingY = 1;
+            falling = false;
+            up();
         }
         if(e.getKeyCode()==KeyEvent.VK_S) {
             movingY = -1;
         }
         if(e.getKeyCode()==KeyEvent.VK_A) {
-            movingX = -1;
+            left();
         }
         if(e.getKeyCode()==KeyEvent.VK_D) {
-            movingX = 1;
+            right();
         }
     }
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode()==KeyEvent.VK_W) {
+            falling = true;
             movingY = 0;
         }
         if(e.getKeyCode()==KeyEvent.VK_S) {
             movingY = 0;
         }
         if(e.getKeyCode()==KeyEvent.VK_A) {
-            movingX = 0;
+            xVelo = 0;
         }
         if(e.getKeyCode()==KeyEvent.VK_D) {
-            movingX = 0;
+            xVelo = 0;
         }
     }
 }
