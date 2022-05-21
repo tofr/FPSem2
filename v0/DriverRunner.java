@@ -1,4 +1,3 @@
-package Handler;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -21,6 +20,7 @@ public class DriverRunner extends JPanel implements Runnable{
 	Player player;
 
 	LevelHandler levelHandler;
+	IntroHandler introHandler;
 
 	int imag2x;
 	int imag2y;
@@ -31,8 +31,9 @@ public class DriverRunner extends JPanel implements Runnable{
 		this.setPreferredSize(SCREEN_SIZE);
 		player = new Player();
 		levelHandler = new LevelHandler(player);
+		introHandler = new IntroHandler();
 		gameStack = new Stack<Handler>();
-		map.loadImg();
+		map.loadImg("map.png");
         imag2x = map.imag2x;
         imag2y = map.imag2y;
 		gameThread = new Thread(this);
@@ -42,11 +43,8 @@ public class DriverRunner extends JPanel implements Runnable{
     }
 
 	public void startup() {
-		gameStack.push(levelHandler);
+		gameStack.push(introHandler);
 	}
-	
-	
-    
 	
 	public void paint(Graphics g) {
 		Toolkit.getDefaultToolkit().sync(); 

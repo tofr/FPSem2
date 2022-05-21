@@ -1,4 +1,4 @@
-package Handler;
+
 
 /***
  * Handler Class for Levels
@@ -31,7 +31,7 @@ public class LevelHandler extends Handler { // Graphics to handle events during 
 	}
 
     public void loadLev() {
-		levMap.loadFile("/LevelRelated/Levels/test.txt");
+		levMap.loadFile("./LevelRelated/Levels/test.txt");
 		levMap.load();
 	}
 

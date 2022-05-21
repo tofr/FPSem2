@@ -1,4 +1,5 @@
-package testing.music;
+package music;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -12,27 +13,26 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
   
-public class SimpleAudioPlayer 
+public class MusicThing 
 {
   
     // to store current position
-    Long currentFrame;
-    Clip clip;
+    public Long currentFrame;
+    public Clip clip;
       
     // current status of clip
-    String status;
+    public String status;
       
-    AudioInputStream audioInputStream;
-    static String filePath;
+    public AudioInputStream audioInputStream;
+    public String filePath;
   
-    // constructor to initialize streams and clip
-    public SimpleAudioPlayer()
+    public MusicThing(String path)
         throws UnsupportedAudioFileException,
         IOException, LineUnavailableException 
     {
         // create AudioInputStream object
         audioInputStream = 
-                AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+                AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
           
         // create clip reference
         clip = AudioSystem.getClip();
@@ -42,44 +42,8 @@ public class SimpleAudioPlayer
           
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
-  
-    public static void main(String[] args) 
-    {
-        try
-        {
-            filePath = "TestFile.mid";
-            SimpleAudioPlayer audioPlayer = 
-                            new SimpleAudioPlayer();
-              
-            audioPlayer.play();
-            Scanner sc = new Scanner(System.in);
-              
-            while (true)
-            {
-                System.out.println("1. pause");
-                System.out.println("2. resume");
-                System.out.println("3. restart");
-                System.out.println("4. stop");
-                System.out.println("5. Jump to specific time");
-                int c = sc.nextInt();
-                audioPlayer.gotoChoice(c);
-                if (c == 4)
-                break;
-            }
-            sc.close();
-        } 
-          
-        catch (Exception ex) 
-        {
-            System.out.println("Error with playing sound.");
-            ex.printStackTrace();
-          
-          }
-    }
       
-    // Work as the user enters his choice
-      
-    private void gotoChoice(int c)
+    public void gotoChoice(int c)
             throws IOException, LineUnavailableException, UnsupportedAudioFileException 
     {
         switch (c) 
@@ -108,10 +72,10 @@ public class SimpleAudioPlayer
       
     }
       
-    // Method to play the audio
+    
     public void play() 
     {
-        //start the clip
+        
         FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         float vol = (float) ((float) (volume.getMaximum() - volume.getMinimum()) * 0.80) + (float) volume.getMinimum();
         volume.setValue(vol);
@@ -121,7 +85,7 @@ public class SimpleAudioPlayer
         status = "play";
     }
       
-    // Method to pause the audio
+    
     public void pause() 
     {
         if (status.equals("paused")) 
@@ -135,7 +99,7 @@ public class SimpleAudioPlayer
         status = "paused";
     }
       
-    // Method to resume the audio
+    
     public void resumeAudio() throws UnsupportedAudioFileException,
                                 IOException, LineUnavailableException 
     {
@@ -151,7 +115,7 @@ public class SimpleAudioPlayer
         this.play();
     }
       
-    // Method to restart the audio
+    
     public void restart() throws IOException, LineUnavailableException,
                                             UnsupportedAudioFileException 
     {
@@ -163,7 +127,7 @@ public class SimpleAudioPlayer
         this.play();
     }
       
-    // Method to stop the audio
+    
     public void stop() throws UnsupportedAudioFileException,
     IOException, LineUnavailableException 
     {
@@ -172,7 +136,7 @@ public class SimpleAudioPlayer
         clip.close();
     }
       
-    // Method to jump over a specific part
+    
     public void jump(long c) throws UnsupportedAudioFileException, IOException,
                                                         LineUnavailableException 
     {
@@ -187,7 +151,7 @@ public class SimpleAudioPlayer
         }
     }
       
-    // Method to reset audio stream
+    
     public void resetAudioStream() throws UnsupportedAudioFileException, IOException,
                                             LineUnavailableException 
     {
