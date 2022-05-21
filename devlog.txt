@@ -7,3 +7,6 @@
 5/19 - Jason: Smoothed bound detection and collisions, smoothed top scrolling, side scrolling 
               Started implementing block render
        Russell: Started Research on jumping and the physics behind it
+
+5/20 - Jason: Block rendering system works, level design can now begin
+       Ariel: Started working on enemies and enemy interaction
