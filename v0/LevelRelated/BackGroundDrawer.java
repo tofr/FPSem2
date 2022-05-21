@@ -1,3 +1,4 @@
+package v0.LevelRelated;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -5,11 +6,12 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.*;
 
-public class MapDrawer {
-    BufferedImage imag2;
-    int imag2x;
-    int imag2y;
+public class BackGroundDrawer {
+    public BufferedImage imag2;
+    public int imag2x;
+    public int imag2y;
 
+	// loads image specified by path
     public void loadImg() {
 		try {
 			imag2 = ImageIO.read(new File("map.jpg"));

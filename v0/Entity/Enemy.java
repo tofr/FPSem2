@@ -4,7 +4,7 @@ public abstract class enemy{
     protected int attack;
     protected boolean falling;
     
-    public class attack(){};
+    public abstract class attack();
 
     public class move(){};
 }

@@ -1,4 +1,7 @@
+package LevelRelated;
+
 import Entity.Player;
+import Settings.MapSettings;
 
 public class Camera {
     public double x, y;
@@ -11,8 +14,8 @@ public class Camera {
 
     public void tick(Player player) { // have the camera follow the player!
         
-        x = -player.getX() + DriverRunner.GAME_WIDTH/2;
-        y = -player.getY() + DriverRunner.GAME_HEIGHT/2;
+        x = -player.getX() + MapSettings.GAME_WIDTH/2;
+        y = -player.getY() + MapSettings.GAME_HEIGHT/2;
     }
 
     public void setX(double x) {
