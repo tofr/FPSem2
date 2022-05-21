@@ -1,4 +1,4 @@
-package v0.Entity;
+package Entity;
 
 import java.awt.*;
 import java.awt.event.*;

@@ -1,4 +1,4 @@
-package v0.Blocks;
+package Blocks;
 
 import java.awt.*;
 

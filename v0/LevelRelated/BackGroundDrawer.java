@@ -1,4 +1,4 @@
-package v0.LevelRelated;
+package LevelRelated;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
