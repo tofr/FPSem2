@@ -12,6 +12,8 @@ import java.awt.*;
 public class TileMap {
     public String[][] rawMap;
     public Block[][] map;
+
+    public ArrayList<Block> rigidBlocks;
     // public ArrayList<MapEntity> entities;
     // public Location start;
     // public Location end;
@@ -19,6 +21,7 @@ public class TileMap {
     public TileMap() {
         this.map = new Block[0][0];
         this.rawMap = new String[0][0];
+        rigidBlocks = new ArrayList<Block>();
         // this.entities = new ArrayList<>();
         // this.start = null;
         // this.end = null;
@@ -38,8 +41,9 @@ public class TileMap {
             }
             this.rawMap = blockMap.toArray(new String[0][0]);
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e + "hey error heere");
         }
+        this.map = new Block[rawMap.length][rawMap[0].length];
     }
 
     public boolean load() {
@@ -47,9 +51,13 @@ public class TileMap {
             for (int col = 0; col < this.rawMap[row].length; col++) {
                 switch (rawMap[row][col]) {
                     case "G":
-                        map[row][col] = new Grass(row * MapSettings.tileSize, col * MapSettings.tileSize);
-                        break;
+                        Block temp =  new Grass(col * MapSettings.tileSize, row * MapSettings.tileSize);
+                        map[row][col] = temp;
+                        rigidBlocks.add(temp);
                         
+                        break;
+                    default:
+                        break;
                         
                 }
             }

@@ -58,6 +58,7 @@ public class DriverRunner extends JPanel implements Runnable{
         imag2y = map.imag2y;
 		gameThread = new Thread(this);
 		gameThread.start();
+		currLev = new TileMap();
 
 		//DELETE THIS
 		smallMap.add(new Grass(400, 400));
@@ -69,6 +70,7 @@ public class DriverRunner extends JPanel implements Runnable{
 		smallMap.add(new Grass(600, 360));
 		smallMap.add(new Grass(440, 360));
 		snapCamera();
+		loadLev();
 
 		
     }
@@ -95,7 +97,8 @@ public class DriverRunner extends JPanel implements Runnable{
 	public void draw(Graphics g) {
 		cam.tick(player);
 		Toolkit.getDefaultToolkit().sync(); 
-		map.draw(g, this);		
+		g.fillRect(0, 0, 1000, 500);
+		// map.draw(g, this);		
 		if (cam.getX() < 0) g.translate((int) cam.getX(), 0);
 		if (cam.getY() < 0) g.translate(0, (int) cam.getY());
 		
@@ -143,7 +146,7 @@ public class DriverRunner extends JPanel implements Runnable{
 				// 	player.down();
 					
 				// }	
-				player.tick(smallMap);
+				player.tick(currLev.rigidBlocks);
 				player.jumping = false;
 
 				
