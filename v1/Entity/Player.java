@@ -5,17 +5,18 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 import Blocks.Block;
+import LevelRelated.TileMap;
 import Settings.MapSettings;
 
-public class Player {
+public class Player extends Entity {
 
     public int lives;
     public int coins;
 
-    public float playerX;
-    public float playerY;
-    public int playerHeight;
-    public int playerWidth;
+    public double xPos;
+    public double yPos;
+    public int height;
+    public int width;
 
     //1 right/up, 0 not moving, -1 left/down
     public int movingX = 0;
@@ -28,40 +29,41 @@ public class Player {
     public double xVelo = 0;
 
     public Player() {
-        this.playerX = 400;
-        this.playerY = 00;
-        this.playerHeight = 80;
-        this.playerWidth = 40;
+        this.xPos = 400;
+        this.yPos = 00;
+        this.height = 80;
+        this.width = 40;
         coins = 0;
         lives = 5;
     }
 
     
-    public void tick(ArrayList<Block> rigidBlocks) {
+    public void tick(TileMap tileMap) {
         
         if (falling) {
             yVelo = 2;
         }
-        rigidCollision(rigidBlocks);
-        playerX += xVelo;
-        playerY += yVelo;
-        rigidCollision(rigidBlocks);
+        rigidCollision(tileMap);
+        xPos += xVelo;
+        yPos += yVelo;
+        rigidCollision(tileMap);
+        nonRigidCollision(tileMap);
     }
     
-    public void rigidCollision(ArrayList<Block> rigidBlocks) {
-        for (int i = 0; i < rigidBlocks.size(); i++) {
+    public void rigidCollision(TileMap tilemap) {
+        for (int i = 0; i < tilemap.rigidBlocks.size(); i++) {
 
-            if (getBottomBounds().intersects(rigidBlocks.get(i).getBounds())) {
+            if (getBottomBounds().intersects(tilemap.rigidBlocks.get(i).getBounds())) {
                 yVelo = 0;
                
                
             }
-            if (getRightBounds().intersects(rigidBlocks.get(i).getBounds())) {
-                playerX = rigidBlocks.get(i).getX() - playerWidth;               
+            if (getRightBounds().intersects(tilemap.rigidBlocks.get(i).getBounds())) {
+                xPos = tilemap.rigidBlocks.get(i).getX() - width;               
             }
 
-            if (getLeftBounds().intersects(rigidBlocks.get(i).getBounds())) {
-                playerX = rigidBlocks.get(i).getX() + MapSettings.tileSize;               
+            if (getLeftBounds().intersects(tilemap.rigidBlocks.get(i).getBounds())) {
+                xPos = tilemap.rigidBlocks.get(i).getX() + MapSettings.tileSize;               
             }
             
            
@@ -69,23 +71,24 @@ public class Player {
         }
     }
 
-    public void nonRigitCollision(ArrayList<Block> nonRigidBlocks) {
-        for (int i = 0; i < nonRigidBlocks.size(); i++) {
+    public void nonRigidCollision(TileMap tilemap) {
+        for (int i = 0; i < tilemap.nonRigidBlocks.size(); i++) {
             
-           if (getBounds().intersects(nonRigidBlocks.get(i).getBounds())) {
+           if (getBounds().intersects(tilemap.nonRigidBlocks.get(i).getBounds())) {
                coins++;
-               nonRigidBlocks.remove(i);
+               System.out.println(tilemap.nonRigidBlocks.get(i).getRow() + " " + tilemap.nonRigidBlocks.get(i).getCol());
+               tilemap.setBlock(tilemap.nonRigidBlocks.get(i).getRow(), tilemap.nonRigidBlocks.get(i).getCol(), null);
+               tilemap.nonRigidBlocks.remove(i);
            }
-
         }
     }
 
     public void draw(Graphics g) {
         Graphics o = g.create();
         o.setColor(Color.LIGHT_GRAY);
-	    o.fillRect((int) playerX, (int) playerY, playerWidth, playerHeight);
+	    o.fillRect((int) xPos, (int) yPos, width, height);
         o.setColor(Color.RED);
-        o.fillRect((int) playerX + 1, (int) playerY + playerHeight - 4, playerWidth - 1, 5);
+        o.fillRect((int) xPos + 1, (int) yPos + height - 4, width - 1, 5);
         // o.setColor(Color.BLACK);
         // o.fillRect((int) playerX, (int) playerY + playerHeight, playerWidth, 4);
     }
@@ -100,7 +103,7 @@ public class Player {
 
     public void up() {
         jumping = true;
-        playerY -= 100;
+        yPos -= 100;
     }
 
     public void down() {
@@ -108,27 +111,27 @@ public class Player {
     }
 
     public Rectangle getBounds() {
-        return new Rectangle((int) playerX, (int) playerY, playerWidth, playerHeight);
+        return new Rectangle((int) xPos, (int) yPos, width, height);
     }
 
     public Rectangle getRightBounds() {
-        return new Rectangle((int) playerX + playerWidth - 4, (int) playerY, 4, playerHeight - 4);
+        return new Rectangle((int) xPos + width - 4, (int) yPos, 4, height - 4);
     }
 
     public Rectangle getLeftBounds() {
-        return new Rectangle((int) playerX + 1, (int) playerY, 4, playerHeight - 4);
+        return new Rectangle((int) xPos + 1, (int) yPos, 4, height - 4);
     }
 
     public Rectangle getBottomBounds() {
-        return new Rectangle((int) playerX + 1, (int) playerY + playerHeight - 4, playerWidth - 1, 5); //4 is arbitrary
+        return new Rectangle((int) xPos + 1, (int) yPos + height - 4, width - 1, 5); //4 is arbitrary
     }
 
     public double getX() {
-        return playerX;
+        return xPos;
     }
 
     public double getY() {
-        return playerY;
+        return yPos;
     }
 
     public void keyPressed(KeyEvent e) {

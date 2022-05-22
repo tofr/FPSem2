@@ -29,8 +29,8 @@ public class LevelHandler extends Handler { // Graphics to handle events during 
     }
 
     public void snapCamera(Player player) {
-		cam.setX(player.playerX);
-		cam.setY(player.playerY);
+		cam.setX(player.xPos);
+		cam.setY(player.yPos);
 	}
 
     public void loadLev(String filename) {
@@ -39,7 +39,7 @@ public class LevelHandler extends Handler { // Graphics to handle events during 
 	}
 
     public void tick(DriverRunner driver) {
-        driver.player.tick(levMap.rigidBlocks);
+        driver.player.tick(levMap);
     }
 
     public void draw(Graphics g, DriverRunner driver) {

@@ -1,10 +1,11 @@
-public abstract class enemy{
-    
-    protected int health;
-    protected int attack;
+package Entity;
+
+public abstract class Enemy extends Entity{
+
     protected boolean falling;
     
-    public abstract class attack();
-
-    public class move(){};
+    public abstract void tick();
+    
 }
+
+   

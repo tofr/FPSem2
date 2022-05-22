@@ -1,12 +1,12 @@
-package Handlers;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-import Entity.*;
-import LevelRelated.*;
-import Settings.*;
+import Entity.Player;
+import LevelRelated.BackGroundDrawer;
+import LevelRelated.Levels.FileLocations;
+import Settings.MapSettings;
 
 
 public class DriverRunner extends JPanel implements Runnable{
@@ -45,7 +45,7 @@ public class DriverRunner extends JPanel implements Runnable{
 
 	public void startup() {
 		gameStack.push(levelHandler);
-		gameStack.push(logoIntroHandler);
+		// gameStack.push(logoIntroHandler);
 	}
 	
 	public void paint(Graphics g) {

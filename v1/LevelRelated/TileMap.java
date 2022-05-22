@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Blocks.Block;
+import Blocks.Coin;
 import Blocks.Dirt;
 import Blocks.Grass;
 import Settings.MapSettings;
@@ -16,6 +17,7 @@ public class TileMap {
     public Block[][] map;
 
     public ArrayList<Block> rigidBlocks;
+    public ArrayList<Block> nonRigidBlocks;
     // public ArrayList<MapEntity> entities;
     // public Location start;
     // public Location end;
@@ -24,6 +26,7 @@ public class TileMap {
         this.map = new Block[0][0];
         this.rawMap = new String[0][0];
         rigidBlocks = new ArrayList<Block>();
+        nonRigidBlocks = new ArrayList<Block>();
         // this.entities = new ArrayList<>();
         // this.start = null;
         // this.end = null;
@@ -64,6 +67,17 @@ public class TileMap {
                         temp =  new Dirt(col * MapSettings.tileSize, row * MapSettings.tileSize);
                         map[row][col] = temp;
                         rigidBlocks.add(temp);
+                        break;
+
+                    case "C":
+                        temp =  new Coin(col * MapSettings.tileSize, row * MapSettings.tileSize);
+                        temp.setCol(col);
+                        temp.setRow(row);
+                        map[row][col] = temp;
+                        nonRigidBlocks.add(temp);
+                        System.out.println(row + " " + col);
+                        break;
+
                     default:
                         break;
                         
@@ -74,37 +88,13 @@ public class TileMap {
         return true;
     }
 
-    // public void load(ArrayList<MapEntity> entities) {
-    //     this.entities = entities;
-    // }
-
-    // public void add(MapEntity entity) {
-    //     this.entities.add(entity);
-    // }
-
-    // public void remove(MapEntity entity) {
-    //     for (int i = 0; i < this.entities.size(); i++) {
-    //         if (entity.getLocation().equals(this.entities.get(i).getLocation())) {
-    //             entities.remove(i);
-    //         }
-    //     }
-    // }
-
-    // public boolean inBounds(int row, int col) {
-    //     return row >= 0 && row < this.map.length && col >= 0 && col < this.map[row].length;
-    // }
-
-    // public MapEntity entityOn(int row, int col) {
-    //     for (MapEntity entity : this.entities) {
-    //         if (entity.getLocation().equals(new Location(row, col))) {
-    //             return entity;
-    //         }
-    //     }
-    //     return null;
-    // }
 
     public Block getBlock(int row, int col) {
         return this.map[row][col];
+    }
+
+    public void setBlock(int row, int col, Block block) {
+        map[row][col] = block;
     }
 
     public void draw(Graphics g) {
@@ -114,6 +104,7 @@ public class TileMap {
                     continue;
                 }
                 map[row][col].draw(g);
+            
             }
             
         }
