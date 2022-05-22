@@ -5,6 +5,7 @@ import java.util.*;
 import javax.swing.*;
 import Entity.Player;
 import LevelRelated.BackGroundDrawer;
+import LevelRelated.Levels.FileLocations;
 import Settings.MapSettings;
 
 
@@ -20,7 +21,7 @@ public class DriverRunner extends JPanel implements Runnable{
 	Player player;
 
 	LevelHandler levelHandler;
-	LogoHandler introHandler;
+	IntroMenuHandler logoIntroHandler;
 
 	int imag2x;
 	int imag2y;
@@ -30,8 +31,8 @@ public class DriverRunner extends JPanel implements Runnable{
 		this.addKeyListener(new AL());
 		this.setPreferredSize(SCREEN_SIZE);
 		player = new Player();
-		levelHandler = new LevelHandler(player);
-		introHandler = new LogoHandler();
+		levelHandler = new LevelHandler(this, FileLocations.level1);
+		logoIntroHandler = new IntroMenuHandler();
 		gameStack = new Stack<Handler>();
 		map.loadImg("map.png");
         imag2x = map.imag2x;
@@ -44,7 +45,7 @@ public class DriverRunner extends JPanel implements Runnable{
 
 	public void startup() {
 		gameStack.push(levelHandler);
-		gameStack.push(introHandler);
+		// gameStack.push(logoIntroHandler);
 	}
 	
 	public void paint(Graphics g) {
@@ -78,11 +79,11 @@ public class DriverRunner extends JPanel implements Runnable{
 	}
 	public class AL extends KeyAdapter{
 		public void keyPressed(KeyEvent e) {
-			
-			player.keyPressed(e);
+			gameStack.peek().keyPressed(e);
 		}
 		public void keyReleased(KeyEvent e) {
-			player.keyReleased(e);
+			gameStack.peek().keyReleased(e);
+
 		}
 	}
 }

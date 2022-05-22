@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Blocks.Block;
+import Blocks.Dirt;
 import Blocks.Grass;
 import Settings.MapSettings;
 
@@ -50,13 +51,19 @@ public class TileMap {
     public boolean load() {
         for (int row = 0; row < this.rawMap.length; row++) {
             for (int col = 0; col < this.rawMap[row].length; col++) {
+                Block temp = null;
                 switch (rawMap[row][col]) {
+                    
                     case "G":
-                        Block temp =  new Grass(col * MapSettings.tileSize, row * MapSettings.tileSize);
+                        temp =  new Grass(col * MapSettings.tileSize, row * MapSettings.tileSize);
                         map[row][col] = temp;
                         rigidBlocks.add(temp);
                         
                         break;
+                    case "D":
+                        temp =  new Dirt(col * MapSettings.tileSize, row * MapSettings.tileSize);
+                        map[row][col] = temp;
+                        rigidBlocks.add(temp);
                     default:
                         break;
                         

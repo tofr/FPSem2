@@ -9,20 +9,23 @@ import LevelRelated.Camera;
 import LevelRelated.TileMap;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class LevelHandler extends Handler { // Graphics to handle events during a level
 
     public TileMap levMap;
     public int currLev;
+	public DriverRunner driverRunner;
 
     public Camera cam;
 
-    public LevelHandler(Player player) {
+    public LevelHandler(DriverRunner driverRunner, String filename) {
         currLev = 0;
         levMap = new TileMap();
-        cam = new Camera(player.getX(), player.getY());
-        snapCamera(player);
-		loadLev();
+		this.driverRunner = driverRunner;
+        cam = new Camera(driverRunner.player.getX(), driverRunner.player.getY());
+        snapCamera(driverRunner.player);
+		loadLev(filename);
     }
 
     public void snapCamera(Player player) {
@@ -30,8 +33,8 @@ public class LevelHandler extends Handler { // Graphics to handle events during 
 		cam.setY(player.playerY);
 	}
 
-    public void loadLev() {
-		levMap.loadFile("./LevelRelated/Levels/test.txt");
+    public void loadLev(String filename) {
+		levMap.loadFile(filename);
 		levMap.load();
 	}
 
@@ -43,7 +46,8 @@ public class LevelHandler extends Handler { // Graphics to handle events during 
         tick(driver);
 		cam.tick(driver.player);
 		Toolkit.getDefaultToolkit().sync(); 
-		g.fillRect(0, 0, 1000, 500);
+		g.clearRect(0, 0, 800, 600);
+		g.fillRect(0, 0, 800, 600);
 		// map.draw(g, this);		
 		if (cam.getX() < 0) g.translate((int) cam.getX(), 0);
 		if (cam.getY() < 0) g.translate(0, (int) cam.getY());
@@ -52,6 +56,19 @@ public class LevelHandler extends Handler { // Graphics to handle events during 
 		driver.player.draw(g);
 		if (cam.getX() < 0) g.translate((int) -cam.getX(), 0);
 		if (cam.getY() < 0) g.translate(0, (int) -cam.getY());
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		driverRunner.player.keyPressed(e);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		driverRunner.player.keyReleased(e);
 
 	}
 

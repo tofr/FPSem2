@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 import Blocks.Block;
+import Settings.MapSettings;
 
 public class Player {
     public float playerX;
@@ -25,8 +26,8 @@ public class Player {
     public Player() {
         this.playerX = 400;
         this.playerY = 00;
-        this.playerHeight = 60;
-        this.playerWidth = 30;
+        this.playerHeight = 80;
+        this.playerWidth = 40;
     }
 
     
@@ -54,7 +55,7 @@ public class Player {
             }
 
             if (getLeftBounds().intersects(blocks.get(i).getBounds())) {
-                playerX = blocks.get(i).getX() + 20;               
+                playerX = blocks.get(i).getX() + MapSettings.tileSize;               
             }
             
 
@@ -70,7 +71,7 @@ public class Player {
     public void draw(Graphics g) {
         Graphics o = g.create();
         o.setColor(Color.LIGHT_GRAY);
-	    o.fillRect((int) playerX, (int) playerY, 30, 60);
+	    o.fillRect((int) playerX, (int) playerY, playerWidth, playerHeight);
         o.setColor(Color.RED);
         o.fillRect((int) playerX + 1, (int) playerY + playerHeight - 4, playerWidth - 1, 5);
         // o.setColor(Color.BLACK);
