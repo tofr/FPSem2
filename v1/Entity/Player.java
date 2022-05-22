@@ -8,6 +8,10 @@ import Blocks.Block;
 import Settings.MapSettings;
 
 public class Player {
+
+    public int lives;
+    public int coins;
+
     public float playerX;
     public float playerY;
     public int playerHeight;
@@ -28,44 +32,52 @@ public class Player {
         this.playerY = 00;
         this.playerHeight = 80;
         this.playerWidth = 40;
+        coins = 0;
+        lives = 5;
     }
 
     
-    public void tick(ArrayList<Block> blocks) {
+    public void tick(ArrayList<Block> rigidBlocks) {
         
         if (falling) {
             yVelo = 2;
         }
-        collision(blocks);
+        rigidCollision(rigidBlocks);
         playerX += xVelo;
         playerY += yVelo;
-        collision(blocks);
+        rigidCollision(rigidBlocks);
     }
     
-    public void collision(ArrayList<Block> blocks) {
-        for (int i = 0; i < blocks.size(); i++) {
+    public void rigidCollision(ArrayList<Block> rigidBlocks) {
+        for (int i = 0; i < rigidBlocks.size(); i++) {
 
-            if (getBottomBounds().intersects(blocks.get(i).getBounds())) {
+            if (getBottomBounds().intersects(rigidBlocks.get(i).getBounds())) {
                 yVelo = 0;
                
                
             }
-            if (getRightBounds().intersects(blocks.get(i).getBounds())) {
-                playerX = blocks.get(i).getX() - playerWidth;               
+            if (getRightBounds().intersects(rigidBlocks.get(i).getBounds())) {
+                playerX = rigidBlocks.get(i).getX() - playerWidth;               
             }
 
-            if (getLeftBounds().intersects(blocks.get(i).getBounds())) {
-                playerX = blocks.get(i).getX() + MapSettings.tileSize;               
+            if (getLeftBounds().intersects(rigidBlocks.get(i).getBounds())) {
+                playerX = rigidBlocks.get(i).getX() + MapSettings.tileSize;               
             }
-            
-
-
             
            
 
         }
-       
-        
+    }
+
+    public void nonRigitCollision(ArrayList<Block> nonRigidBlocks) {
+        for (int i = 0; i < nonRigidBlocks.size(); i++) {
+            
+           if (getBounds().intersects(nonRigidBlocks.get(i).getBounds())) {
+               coins++;
+               nonRigidBlocks.remove(i);
+           }
+
+        }
     }
 
     public void draw(Graphics g) {
