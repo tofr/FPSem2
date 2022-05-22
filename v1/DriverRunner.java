@@ -4,10 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-import Entity.Player;
-import LevelRelated.BackGroundDrawer;
-import LevelRelated.Levels.FileLocations;
-import Settings.MapSettings;
+import Entity.*;
+import LevelRelated.*;
+import Settings.*;
 
 
 public class DriverRunner extends JPanel implements Runnable{
