@@ -10,3 +10,12 @@
 
 5/20 - Jason: Block rendering system works, level design can now begin
        Ariel: Started working on enemies and enemy interaction
+
+5/21 - Jason: Logo Design and implementation, game state, cleaning up code and reorganized
+
+
+
+TODO:
+- Change the System Millis To Timer in LogoHandler
+- Add a level progression - moving on btw levels
+- Add intro, menu ect

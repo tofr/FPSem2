@@ -4,10 +4,13 @@ import java.awt.image.*;
 import java.io.File;
 
 import javax.imageio.ImageIO;
+import javax.swing.Timer;
 
 import java.awt.*;
 
 public class LogoHandler extends Handler {
+
+    public Timer timer;
 
     public MusicThing music;
     public String filePath;
