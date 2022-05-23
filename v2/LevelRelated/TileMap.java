@@ -75,7 +75,6 @@ public class TileMap {
                         temp.setRow(row);
                         map[row][col] = temp;
                         nonRigidBlocks.add(temp);
-                        System.out.println(row + " " + col);
                         break;
 
                     default:

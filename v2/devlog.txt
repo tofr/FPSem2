@@ -13,7 +13,7 @@
 
 5/21 - Jason: Logo Design and implementation, game state, cleaning up code and reorganized
 
-
+5/22 - Jason: Intro menu finished, coins added
 
 TODO:
 - Change the System Millis To Timer in LogoHandler
