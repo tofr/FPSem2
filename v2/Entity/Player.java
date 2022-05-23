@@ -41,7 +41,7 @@ public class Player extends Entity {
     public void tick(TileMap tileMap) {
         
         if (falling) {
-            yVelo = 4;
+            yVelo = 6;
         }
         rigidCollision(tileMap);
         xPos += xVelo;
