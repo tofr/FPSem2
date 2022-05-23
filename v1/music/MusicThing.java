@@ -41,6 +41,8 @@ public class MusicThing
         clip.open(audioInputStream);
           
         clip.loop(Clip.LOOP_CONTINUOUSLY);
+       
+        
     }
       
     public void gotoChoice(int c)
@@ -79,6 +81,7 @@ public class MusicThing
         FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         float vol = (float) ((float) (volume.getMaximum() - volume.getMinimum()) * 0.80) + (float) volume.getMinimum();
         volume.setValue(vol);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
 
         clip.start();
           
@@ -88,11 +91,7 @@ public class MusicThing
     
     public void pause() 
     {
-        if (status.equals("paused")) 
-        {
-            System.out.println("audio is already paused");
-            return;
-        }
+        
         this.currentFrame = 
         this.clip.getMicrosecondPosition();
         clip.stop();
@@ -103,12 +102,7 @@ public class MusicThing
     public void resumeAudio() throws UnsupportedAudioFileException,
                                 IOException, LineUnavailableException 
     {
-        if (status.equals("play")) 
-        {
-            System.out.println("Audio is already "+
-            "being played");
-            return;
-        }
+        
         clip.close();
         resetAudioStream();
         clip.setMicrosecondPosition(currentFrame);

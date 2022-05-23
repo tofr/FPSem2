@@ -56,7 +56,17 @@ public class IntroMenuHandler extends Handler {
         selection = null;
        state = new Stack<States>();
        startStates();
+       
 
+    }
+
+    public void restart() {
+        try {
+            music.restart();
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
+        
     }
 
     // do something to make this generic to every class
