@@ -27,7 +27,7 @@ public class LevelHandler extends Handler { // Graphics to handle events during 
     }
 
 	public void loadLev() {
-		levels.add(new Level(0)); 
+		levels.add(new Level(1)); 
 	}
 
 	public void tick(DriverRunner driver) {

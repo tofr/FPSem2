@@ -27,7 +27,8 @@ public class Level {
         snapCamera(player);
         switch (level) {
             case 1:
-                loadLev(LevelRelated.Levels.FileLocations.level1);
+                System.out.println("doing this");
+                loadLev("Level1.txt");
                 break;
             default:
                 break;
