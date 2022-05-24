@@ -7,6 +7,7 @@ import Blocks.Block;
 import Blocks.Coin;
 import Blocks.Dirt;
 import Blocks.Grass;
+import Blocks.Button;
 import Settings.MapSettings;
 
 import java.awt.*;
@@ -76,7 +77,10 @@ public class TileMap {
                         map[row][col] = temp;
                         nonRigidBlocks.add(temp);
                         break;
-
+                    case "B":
+                        temp =  new Button(col * MapSettings.tileSize, row * MapSettings.tileSize);
+                        map[row][col] = temp;
+                        rigidBlocks.add(temp);
                     default:
                         break;
                         
