@@ -1,3 +1,5 @@
+package Blocks;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -14,8 +16,9 @@ public class Button extends Block {
     public void draw(Graphics g) {
         // TODO Auto-generated method stub\
         g.setColor(Color.RED);
-        g.drawRoundRect(Xpos + 2, Ypos + (MapSettings.tileSize / 2), MapSettings.tileSize - 4, MapSettings.tileSize / 2, 1, 1);
+        g.fillRoundRect(Xpos + 2, Ypos + (MapSettings.tileSize / 2), MapSettings.tileSize - 4, MapSettings.tileSize / 2, 5, 5);
         g.setColor(Color.WHITE);
+
     }
 
     

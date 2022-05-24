@@ -18,7 +18,6 @@ public class DriverRunner extends JPanel implements Runnable{
 	Thread gameThread;
 	
 	Graphics graphics;
-	Player player;
 
 	LevelHandler levelHandler;
 	IntroMenuHandler logoIntroHandler;
@@ -30,8 +29,8 @@ public class DriverRunner extends JPanel implements Runnable{
 		this.setFocusable(true);
 		this.addKeyListener(new AL());
 		this.setPreferredSize(SCREEN_SIZE);
-		player = new Player();
-		levelHandler = new LevelHandler(this, FileLocations.level1);
+
+		levelHandler = new LevelHandler(this);
 		logoIntroHandler = new IntroMenuHandler();
 		gameStack = new Stack<Handler>();
 		map.loadImg("map.png");
