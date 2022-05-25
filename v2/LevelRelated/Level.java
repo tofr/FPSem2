@@ -2,9 +2,12 @@ package LevelRelated;
 
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+
 import Entity.Player;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.awt.event.*;
 
 
@@ -15,6 +18,8 @@ public class Level {
     public TileMap levMap;
     public Camera cam;
     public static ArrayList<Integer> scores; //add quicksort to sort levels
+
+    public Image background;
 
     public boolean isDone;
     
@@ -32,9 +37,11 @@ public class Level {
         switch (level) {
             case 1:
                 loadLev("./LevelRelated/Lev1.txt");
+                loadImg("./images/pineapple.png");
                 break;
             case 2:
                 loadLev("./LevelRelated/Lev2.txt");
+                loadImg("./images/pineapple.png");
                 break;
             default:
                 
@@ -42,6 +49,19 @@ public class Level {
         }
     }
     
+    public void loadImg(String string) {
+        try {
+            background = ImageIO.read(new File(string));
+
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
+        background = background.getScaledInstance(100, 100, background.SCALE_DEFAULT);
+    }
+
+    public Image getImage() {
+        return this.background;
+    }
 
     public void snapCamera(Player player) {
 		cam.setX(player.xPos);

@@ -21,6 +21,7 @@ public class DriverRunner extends JPanel implements Runnable{
 
 	LevelHandler levelHandler;
 	IntroMenuHandler logoIntroHandler;
+	OverworldHandler overworldHandler;
 
 	int imag2x;
 	int imag2y;
@@ -32,6 +33,8 @@ public class DriverRunner extends JPanel implements Runnable{
 
 		levelHandler = new LevelHandler(this);
 		logoIntroHandler = new IntroMenuHandler();
+		overworldHandler = new OverworldHandler(this);
+
 		gameStack = new Stack<Handler>();
 		// map.loadImg("map.png");
         imag2x = map.imag2x;
@@ -44,7 +47,8 @@ public class DriverRunner extends JPanel implements Runnable{
 
 	public void startup() {
 		// gameStack.push(levelHandler);
-		gameStack.push(logoIntroHandler);
+		gameStack.push(overworldHandler);
+		// gameStack.push(logoIntroHandler);
 	}
 	
 	public void paint(Graphics g) {

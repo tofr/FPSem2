@@ -39,6 +39,16 @@ public class Player extends Entity {
         lives = 5;
     }
 
+    public Player(int x, int y) {
+        
+        this.xPos = x;
+        this.yPos = y;
+        this.height = 80;
+        this.width = 40;
+        coins = 0;
+        lives = 5;
+    }
+
     
     public void tick(Level level) {
         
