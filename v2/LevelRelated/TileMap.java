@@ -36,7 +36,7 @@ public class TileMap {
     
     public void loadFile(String filename) {
         try {
-            Scanner sc = new Scanner(new File(filename));
+            Scanner sc = new Scanner(new File("Lev1.txt"));
             ArrayList<String[]> blockMap = new ArrayList<>();
             while (sc.hasNextLine()) {
                 ArrayList<String> tiles = new ArrayList<>();

@@ -6,69 +6,48 @@
 
 import Entity.Player;
 import LevelRelated.Camera;
+import LevelRelated.Level;
 import LevelRelated.TileMap;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class LevelHandler extends Handler { // Graphics to handle events during a level
 
-    public TileMap levMap;
-    public int currLev;
-	public DriverRunner driverRunner;
+	public ArrayList<Level> levels;
 
-    public Camera cam;
+    public DriverRunner driverRunner;
 
-    public LevelHandler(DriverRunner driverRunner, String filename) {
+	public int currLev;
+
+    public LevelHandler(DriverRunner driverRunner) {
         currLev = 0;
-        levMap = new TileMap();
-		this.driverRunner = driverRunner;
-        cam = new Camera(driverRunner.player.getX(), driverRunner.player.getY());
-        snapCamera(driverRunner.player);
-		loadLev(filename);
+        loadLev();
     }
 
-    public void snapCamera(Player player) {
-		cam.setX(player.xPos);
-		cam.setY(player.yPos);
+	public void loadLev() {
+		levels.add(new Level(1)); 
 	}
 
-    public void loadLev(String filename) {
-		levMap.loadFile(filename);
-		levMap.load();
+	public void tick(DriverRunner driver) {
+		// empty here will add sutff later
 	}
-
-    public void tick(DriverRunner driver) {
-        driver.player.tick(levMap);
-    }
 
     public void draw(Graphics g, DriverRunner driver) {
-        tick(driver);
-		cam.tick(driver.player);
-		Toolkit.getDefaultToolkit().sync(); 
-		g.clearRect(0, 0, 800, 600);
-		g.fillRect(0, 0, 800, 600);
-		// map.draw(g, this);		
-		if (cam.getX() < 0) g.translate((int) cam.getX(), 0);
-		if (cam.getY() < 0) g.translate(0, (int) cam.getY());
-		
-		levMap.draw(g);
-		driver.player.draw(g);
-		if (cam.getX() < 0) g.translate((int) -cam.getX(), 0);
-		if (cam.getY() < 0) g.translate(0, (int) -cam.getY());
-		
+        levels.get(currLev).draw(g);
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		driverRunner.player.keyPressed(e);
+		levels.get(currLev).keyPressed(e);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		driverRunner.player.keyReleased(e);
+		levels.get(currLev).keyReleased(e);
 
 	}
 
