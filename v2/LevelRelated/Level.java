@@ -15,12 +15,15 @@ public class Level {
     public TileMap levMap;
     public Camera cam;
     public static ArrayList<Integer> scores; //add quicksort to sort levels
+
+    public boolean isDone;
     
     public Level(int level) {
         startup(level);
     }
 
     public void startup(int level) {
+        isDone = false;
         player = new Player();
         levMap = new TileMap();
         cam = new Camera(player.getX(), player.getY());
@@ -30,11 +33,15 @@ public class Level {
             case 1:
                 loadLev("./LevelRelated/Lev1.txt");
                 break;
+            case 2:
+                loadLev("./LevelRelated/Lev2.txt");
+                break;
             default:
                 
                 break;
         }
     }
+    
 
     public void snapCamera(Player player) {
 		cam.setX(player.xPos);
@@ -47,11 +54,19 @@ public class Level {
 	}
 
     public void tick() {
-        player.tick(levMap);
+        player.tick(this);
     }
 
     public void addScore(int score) {
         scores.add(score);
+    }
+
+    public void setDone() {
+        isDone = true;
+    }
+
+    public boolean isDone() {
+        return isDone;
     }
 
     public void draw(Graphics g) {

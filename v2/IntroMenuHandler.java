@@ -2,6 +2,7 @@ import LevelRelated.BackGroundDrawer;
 import music.MusicThing;
 import java.awt.image.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Stack;
 
 import javax.imageio.ImageIO;
@@ -19,6 +20,74 @@ public class IntroMenuHandler extends Handler {
         Play,
     }
 
+    // pineapple animation bounce thing
+    public class Pineapple {
+
+        public int xPos;
+        public int yPos;
+        public int xVelo;
+        public int yVelo;
+
+        public Image image;
+        public double rotation;
+        public boolean warped;
+        public double rotationdx;
+
+        public Pineapple() {
+            xPos = (int) (Math.random() * (750));
+            yPos = (int) (Math.random() * (550));
+
+            xVelo = (int) (Math.random() * 3) + 1;
+            yVelo = (int) (Math.random() * 3) + 1;
+            loadImg();
+            warped = (Math.random() < 0.5) ? true : false;
+            rotationdx = (Math.random() / 10) + 0.01;
+        }
+
+        public void tick() {
+            xPos += xVelo;
+            yPos += yVelo;
+            bounce();
+            rotate();
+        }
+
+        public void rotate() {
+            
+            rotation += (warped) ? rotationdx : -rotationdx;
+        }
+
+        public void loadImg() {
+            try {
+                image = ImageIO.read(new File("./images/pineapple.png"));
+    
+            } catch (Exception e) {
+                //TODO: handle exception
+            }
+            image = image.getScaledInstance(60, 60, image.SCALE_DEFAULT);
+        }
+
+        public void draw(Graphics g, DriverRunner driver)
+        {
+            
+            tick();
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.rotate(rotation, xPos + 30, yPos + 30);
+            g2d.drawImage(image, xPos, yPos, driver);
+        }
+
+        void bounce()
+        {
+            if (xPos < 0 )
+                xVelo = Math.abs(xVelo);
+            if ( xPos > 740 )
+                xVelo = -1 * Math.abs(xVelo);
+            if (yPos < 0 )
+                yVelo = Math.abs(yVelo);
+            if ( yPos > 540 )
+                yVelo = -1 * Math.abs(yVelo);
+        }
+    }
+
     public Timer timer;
 
     public MusicThing music;
@@ -29,7 +98,8 @@ public class IntroMenuHandler extends Handler {
 
     private String part;
     private boolean isFinishedWithPartOne;
-    private boolean isFinished;
+    
+    public ArrayList<Pineapple> pineapples;
 
     public Stack<States> state;
 
@@ -49,15 +119,21 @@ public class IntroMenuHandler extends Handler {
         music.play();
         music.pause();  
         started = false;
-        isFinished = false;
         part = "papple";
         localTime = System.currentTimeMillis();
         loadImg();
         selection = null;
-       state = new Stack<States>();
-       startStates();
-       
+        state = new Stack<States>();
+        startStates();
+        pineapples = new ArrayList<Pineapple>();
+        populatePineapples();
 
+    }
+
+    public void populatePineapples() {
+        for (int i = 0; i < 40; i++) {
+            pineapples.add(new Pineapple());
+        }
     }
 
     public void restart() {
@@ -72,7 +148,7 @@ public class IntroMenuHandler extends Handler {
     // do something to make this generic to every class
     public void loadImg() {
 		try {
-			logoImg = ImageIO.read(new File("logo.png"));
+			logoImg = ImageIO.read(new File("./images/logo.png"));
 
 		} catch (Exception e) {
 			//TODO: handle exception
@@ -188,6 +264,10 @@ public class IntroMenuHandler extends Handler {
         if (!isFinishedWithPartOne) {
             drawLogo(g, driver);
         } else {
+            g.clearRect(0, 0, 800, 600);
+            for (Pineapple p : pineapples) {
+                p.draw(g, driver);
+            }
             if (state.peek() == States.Main) {
                 drawMain(g);
             } else if (state.peek() == States.Settings) {

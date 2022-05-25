@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import Blocks.Block;
 import Blocks.ButtonFlag;
+import LevelRelated.Level;
 import LevelRelated.TileMap;
 import Settings.MapSettings;
 
@@ -39,35 +40,35 @@ public class Player extends Entity {
     }
 
     
-    public void tick(TileMap tileMap) {
+    public void tick(Level level) {
         
         if (falling) {
             yVelo = 6;
         }
-        rigidCollision(tileMap);
+        rigidCollision(level);
         xPos += xVelo;
         yPos += yVelo;
-        rigidCollision(tileMap);
-        nonRigidCollision(tileMap);
+        rigidCollision(level);
+        nonRigidCollision(level);
     }
     
-    public void rigidCollision(TileMap tilemap) {
-        for (int i = 0; i < tilemap.rigidBlocks.size(); i++) {
+    public void rigidCollision(Level level) {
+        for (int i = 0; i < level.levMap.rigidBlocks.size(); i++) {
 
-            if (getBottomBounds().intersects(tilemap.rigidBlocks.get(i).getBounds())) {
+            if (getBottomBounds().intersects(level.levMap.rigidBlocks.get(i).getBounds())) {
                 yVelo = 0;
-               if (tilemap.rigidBlocks.get(i).getId().equals("button")) {
-                   System.out.println(tilemap.rigidBlocks.get(i).getId());
-                  
+               if (level.levMap.rigidBlocks.get(i).getId().equals("button")) {
+                   ((ButtonFlag) level.levMap.rigidBlocks.get(i)).setPressed();
+                    level.setDone();
                }
                
             }
-            if (getRightBounds().intersects(tilemap.rigidBlocks.get(i).getBounds())) {
-                xPos = tilemap.rigidBlocks.get(i).getX() - width;               
+            if (getRightBounds().intersects(level.levMap.rigidBlocks.get(i).getBounds())) {
+                xPos = level.levMap.rigidBlocks.get(i).getX() - width;               
             }
 
-            if (getLeftBounds().intersects(tilemap.rigidBlocks.get(i).getBounds())) {
-                xPos = tilemap.rigidBlocks.get(i).getX() + MapSettings.tileSize;               
+            if (getLeftBounds().intersects(level.levMap.rigidBlocks.get(i).getBounds())) {
+                xPos = level.levMap.rigidBlocks.get(i).getX() + MapSettings.tileSize;               
             }
 
             
@@ -77,14 +78,14 @@ public class Player extends Entity {
         }
     }
     //
-    public void nonRigidCollision(TileMap tilemap) { 
-        for (int i = 0; i < tilemap.nonRigidBlocks.size(); i++) {
+    public void nonRigidCollision(Level level) { 
+        for (int i = 0; i < level.levMap.nonRigidBlocks.size(); i++) {
             
-           if (getBounds().intersects(tilemap.nonRigidBlocks.get(i).getBounds())) {
+           if (getBounds().intersects(level.levMap.nonRigidBlocks.get(i).getBounds())) {
                coins++;
-               System.out.println(tilemap.nonRigidBlocks.get(i).getRow() + " " + tilemap.nonRigidBlocks.get(i).getCol());
-               tilemap.setBlock(tilemap.nonRigidBlocks.get(i).getRow(), tilemap.nonRigidBlocks.get(i).getCol(), null);
-               tilemap.nonRigidBlocks.remove(i);
+               System.out.println(level.levMap.nonRigidBlocks.get(i).getRow() + " " + level.levMap.nonRigidBlocks.get(i).getCol());
+               level.levMap.setBlock(level.levMap.nonRigidBlocks.get(i).getRow(), level.levMap.nonRigidBlocks.get(i).getCol(), null);
+               level.levMap.nonRigidBlocks.remove(i);
            }
         }
     }
@@ -93,8 +94,8 @@ public class Player extends Entity {
         Graphics o = g.create();
         o.setColor(Color.LIGHT_GRAY);
 	    o.fillRect((int) xPos, (int) yPos, width, height);
-        o.setColor(Color.RED);
-        o.fillRect((int) xPos + 1, (int) yPos + height - 4, width - 1, 5);
+        // o.setColor(Color.RED);
+        // o.fillRect((int) xPos + 1, (int) yPos + height - 4, width - 1, 5);
         // o.setColor(Color.BLACK);
         // o.fillRect((int) playerX, (int) playerY + playerHeight, playerWidth, 4);
     }

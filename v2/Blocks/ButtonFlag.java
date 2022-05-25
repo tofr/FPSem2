@@ -22,7 +22,9 @@ public class ButtonFlag extends Block {
         if (!pressed) {
             g.fillRoundRect(Xpos + 2, Ypos + (MapSettings.tileSize / 2), MapSettings.tileSize - 4, MapSettings.tileSize / 2, 10, 10);
         }
-        g.fillRect(Xpos + 2, Ypos + (MapSettings.tileSize / 2), MapSettings.tileSize - 4, 2);
+        else {
+            g.fillRect(Xpos + 2, Ypos + MapSettings.tileSize - 2, MapSettings.tileSize - 4, 2);
+        }
         g.setColor(Color.WHITE);
 
     }
@@ -31,7 +33,7 @@ public class ButtonFlag extends Block {
     public Rectangle getBounds() {
         // TODO Auto-generated method stub
         return (!pressed) ? new Rectangle(Xpos + 2, Ypos + (MapSettings.tileSize / 2), MapSettings.tileSize - 4, MapSettings.tileSize / 2) : 
-                new Rectangle(Xpos, Ypos+(MapSettings.tileSize), MapSettings.tileSize, 1);
+                new Rectangle(Xpos, Ypos+(MapSettings.tileSize), MapSettings.tileSize, 2);
     }
 
     @Override
