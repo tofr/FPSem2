@@ -19,4 +19,8 @@ public class Dirt extends Block {
     public Rectangle getBounds() {
         return new Rectangle(Xpos, Ypos, MapSettings.tileSize, MapSettings.tileSize);
     }
+
+    public String getId() {
+        return "dirt";
+    }
 }

@@ -25,4 +25,8 @@ public class Coin extends Block {
         return new Rectangle(Xpos + (MapSettings.tileSize / 4), Ypos + (MapSettings.tileSize / 4), MapSettings.tileSize / 2, MapSettings.tileSize / 2);
     }
     
+
+    public String getId() {
+        return "coin";
+    }
 }

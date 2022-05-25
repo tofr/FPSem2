@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 import Blocks.Block;
+import Blocks.ButtonFlag;
 import LevelRelated.TileMap;
 import Settings.MapSettings;
 
@@ -55,7 +56,10 @@ public class Player extends Entity {
 
             if (getBottomBounds().intersects(tilemap.rigidBlocks.get(i).getBounds())) {
                 yVelo = 0;
-               
+               if (tilemap.rigidBlocks.get(i).getId().equals("button")) {
+                   System.out.println(tilemap.rigidBlocks.get(i).getId());
+                  
+               }
                
             }
             if (getRightBounds().intersects(tilemap.rigidBlocks.get(i).getBounds())) {
@@ -65,6 +69,8 @@ public class Player extends Entity {
             if (getLeftBounds().intersects(tilemap.rigidBlocks.get(i).getBounds())) {
                 xPos = tilemap.rigidBlocks.get(i).getX() + MapSettings.tileSize;               
             }
+
+            
             
            
 

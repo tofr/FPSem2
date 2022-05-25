@@ -25,16 +25,15 @@ public class Level {
         levMap = new TileMap();
         cam = new Camera(player.getX(), player.getY());
         snapCamera(player);
-        loadLev("Lev1.txt");
-        // switch (level) {
-        //     case 1:
-        //         System.out.println("doing this");
+        
+        switch (level) {
+            case 1:
+                loadLev("./LevelRelated/Lev1.txt");
+                break;
+            default:
                 
-        //         break;
-        //     default:
-        //         loadLev("Level1.txt");
-        //         break;
-        // }
+                break;
+        }
     }
 
     public void snapCamera(Player player) {

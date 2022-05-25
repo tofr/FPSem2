@@ -22,6 +22,7 @@ public class LevelHandler extends Handler { // Graphics to handle events during 
 	public int currLev;
 
     public LevelHandler(DriverRunner driverRunner) {
+		levels = new ArrayList<Level>();
         currLev = 0;
         loadLev();
     }

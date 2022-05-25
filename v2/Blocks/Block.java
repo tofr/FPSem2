@@ -49,5 +49,8 @@ public abstract class Block {
 
     public abstract Rectangle getBounds();
         
+    public String getId() {
+        return "block";
+    }
         
 }
