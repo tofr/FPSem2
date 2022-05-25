@@ -72,7 +72,7 @@ public class Player extends Entity {
             }
 
             //adding a mehtod to detect if hit
-            if(getLeftBounds().intersects(level.levMap.rigidBlocks.get(i).getBounds()) || 
+            //if(getLeftBounds().intersects(level.levMap.rigidBlocks.get(i).getBounds()) || 
             
             
            
