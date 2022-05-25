@@ -81,6 +81,8 @@ public class Player extends Entity {
                 xPos = level.levMap.rigidBlocks.get(i).getX() + MapSettings.tileSize;               
             }
 
+            //adding a mehtod to detect if hit
+            if(getLeftBounds().intersects(level.levMap.rigidBlocks.get(i).getBounds()) || 
             
             
            
